@@ -60,6 +60,40 @@ public class DriverManage {
         return driver;
     }
 
+    public WebDriver setUpEdgeDriver(){
+        capabilities.setPlatform(Platform.WINDOWS);
+        capabilities.setBrowserName("Edge");
+        capabilities.setVersion("115.0.1901.200");
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.merge(capabilities);
+        try {
+            driver = new RemoteWebDriver(new URL(ConfigReader.getProperty("hubUrl")), edgeOptions);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().window().maximize();
+        System.out.println("*****  Setup Edge Driver *****");
+        return driver;
+    }
+
+    public WebDriver setUpIEDriver(){
+        capabilities.setPlatform(Platform.WINDOWS);
+        capabilities.setBrowserName("IE");
+       // capabilities.setVersion("115.0.1901.200");
+        InternetExplorerOptions IEOptions = new InternetExplorerOptions();
+        IEOptions.merge(capabilities);
+        try {
+            driver = new RemoteWebDriver(new URL(ConfigReader.getProperty("hubUrl")), IEOptions);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().window().maximize();
+        System.out.println("*****  Setup IE Driver *****");
+        return driver;
+    }
+
 
     public static void setDriver(String browser) {
 
